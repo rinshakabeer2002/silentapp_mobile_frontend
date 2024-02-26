@@ -31,6 +31,11 @@ export const EditLocation: React.FC<EditLocationScreenNavigationProp> = ({
         label: 'Vibrate',
         value: '2',
       },
+      {
+        id: '3',
+        label: 'Reject',
+        value: '3',
+      },
     ],
     [],
   );
