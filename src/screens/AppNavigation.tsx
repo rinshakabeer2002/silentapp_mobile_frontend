@@ -12,7 +12,7 @@ import {EditLocation} from './edit-location/EditLocation';
 type AppNavigationParamsList = {
   Locations: undefined;
   AddLocation: undefined;
-  EditLocation: undefined;
+  EditLocation: {location: any; index: number};
 };
 
 const StackNavigator = createNativeStackNavigator<AppNavigationParamsList>();

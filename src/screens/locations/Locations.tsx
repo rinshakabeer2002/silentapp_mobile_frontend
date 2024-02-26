@@ -1,5 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, Pressable} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  Button,
+  FlatList,
+} from 'react-native';
 import {LocalStore} from '../../utils/LocalStore';
 import {LocationsScreenNavigationProp} from '../AppNavigation';
 
@@ -9,11 +16,28 @@ export const Locations: React.FC<LocationsScreenNavigationProp> = ({
   const [locations, setLocations] = useState<Array<any>>([]);
   const loadLocations = async () => {
     const data = await LocalStore.getLocations();
-    setLocations(data);
+    if (data && data.length) setLocations(data);
+    else setLocations([]);
   };
+
   useEffect(() => {
+    const unsubscribeFocus = navigation.addListener('focus', () => {
+      loadLocations();
+    });
     loadLocations();
+    return () => {
+      unsubscribeFocus();
+    };
   }, []);
+  React.useEffect(() => {
+    // Use `setOptions` to update the button that we previously specified
+    // Now the button includes an `onPress` handler to update the count
+    navigation.setOptions({
+      headerRight: () => (
+        <Button onPress={() => navigation.push('AddLocation')} title="Add" />
+      ),
+    });
+  }, [navigation]);
   const handleAdd = () => {
     navigation.push('AddLocation');
   };
@@ -38,9 +62,30 @@ export const Locations: React.FC<LocationsScreenNavigationProp> = ({
       </View>
     );
   }
+  const renderLocation = ({item, index}: {item: any; index: number}) => {
+    return (
+      <Pressable
+        onPress={() => {
+          navigation.push('EditLocation', {location: item, index: index});
+        }}>
+        <View style={styles.location}>
+          <Text style={{fontSize: 18, fontWeight: '600'}}>
+            {item.location.name}
+          </Text>
+          <Text style={{fontSize: 13}}>
+            {item.selectedPhoneMode === '1' ? 'Silent' : 'Vibrate'}
+          </Text>
+        </View>
+      </Pressable>
+    );
+  };
   return (
     <View style={styles.container}>
-      <Text>Locations</Text>
+      <FlatList
+        data={locations}
+        renderItem={renderLocation}
+        keyExtractor={(item: {id: string; name: string; video: any}) => item.id}
+      />
     </View>
   );
 };
@@ -59,5 +104,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 25,
+  },
+  location: {
+    width: '100%',
+    paddingLeft: 20,
+    height: 60,
+    justifyContent: 'center',
+    borderBottomColor: '#d3d3de',
+    borderBottomWidth: 1,
   },
 });
