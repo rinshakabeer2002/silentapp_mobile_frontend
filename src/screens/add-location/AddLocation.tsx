@@ -5,7 +5,7 @@ import GooglePlaces from './components/GooglePlaces';
 import {DEFAULT_LOCATION} from '../../utils/constants';
 import Slider from '@react-native-community/slider';
 import RadioGroup from 'react-native-radio-buttons-group';
-import MapView from 'react-native-maps';
+import MapView, {Marker, Circle} from 'react-native-maps';
 import {LocalStore} from '../../utils/LocalStore';
 import {AddLocationScreenNavigationProp} from '../AppNavigation';
 export const AddLocation: React.FC<AddLocationScreenNavigationProp> = ({
@@ -40,7 +40,8 @@ export const AddLocation: React.FC<AddLocationScreenNavigationProp> = ({
 
   const onPlaceSelection = async (details: any) => {
     setShowLocationPicker(false);
-    console.log('onPlaceSelection ', details);
+    setLocation(details);
+    // console.log('onPlaceSelection ', details);
     // updateAppState({
     //   type: APPCONTEXT_UPDATE_USER_LOCATION,
     //   payload: details,
@@ -106,14 +107,36 @@ export const AddLocation: React.FC<AddLocationScreenNavigationProp> = ({
           marginTop: 20,
         }}>
         <MapView
-          initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
+          minZoomLevel={2} // default => 0
+          maxZoomLevel={15} // default => 20
+          region={{
+            latitude: location.coordinates.lat,
+            longitude: location.coordinates.lng,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
-          style={{width: '100%', height: '100%'}}
-        />
+          initialRegion={{
+            latitude: location.coordinates.lat,
+            longitude: location.coordinates.lng,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+          style={{width: '100%', height: '100%'}}>
+          <Circle
+            center={{
+              latitude: location.coordinates.lat,
+              longitude: location.coordinates.lng,
+            }}
+            radius={radius}
+            fillColor={'rgba(255, 0, 0, 0.5)'}
+          />
+          <Marker
+            coordinate={{
+              latitude: location.coordinates.lat,
+              longitude: location.coordinates.lng,
+            }}
+          />
+        </MapView>
       </View>
       <View
         style={{
