@@ -130,9 +130,9 @@ export const Locations: React.FC<LocationsScreenNavigationProp> = ({
     let selectedPhoneMode = 'Silent';
     if (item.selectedPhoneMode === '2') selectedPhoneMode = 'Vibrate';
     else if (item.selectedPhoneMode === '3') selectedPhoneMode = 'Reject';
-    const econtacts = item.emergencyContacts.map(
-      (eitem: any) => eitem.displayName,
-    );
+    const econtacts = item.emergencyContacts
+      ? item.emergencyContacts.map((eitem: any) => eitem.displayName)
+      : [];
     return (
       <Pressable
         onPress={() => {
