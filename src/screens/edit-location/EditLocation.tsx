@@ -97,6 +97,7 @@ export const EditLocation: React.FC<EditLocationScreenNavigationProp> = ({
       location: location,
       radius: radius,
       selectedPhoneMode: selectedPhoneMode,
+      emergencyContacts: route.params.location.emergencyContacts || [],
     };
     setTimeout(async () => {
       const currentLocations = await LocalStore.getLocations();
