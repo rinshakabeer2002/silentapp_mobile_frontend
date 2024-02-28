@@ -38,8 +38,6 @@ const EmergencyContacts: React.FC<Props> = ({
         Contacts.getAll()
           .then(contacts => {
             // work with contacts
-
-            console.log(contacts);
             let cdata: any[] = [];
             if (contacts.length) {
               cdata = contacts.map(item => {

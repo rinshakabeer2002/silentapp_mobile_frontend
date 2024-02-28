@@ -76,7 +76,7 @@ export const EditLocation: React.FC<EditLocationScreenNavigationProp> = ({
 
   const onPlaceSelection = async (details: any) => {
     setShowLocationPicker(false);
-    console.log('onPlaceSelection ', details);
+    setLocation(details);
     // updateAppState({
     //   type: APPCONTEXT_UPDATE_USER_LOCATION,
     //   payload: details,

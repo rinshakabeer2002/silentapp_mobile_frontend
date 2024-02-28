@@ -149,7 +149,7 @@ class LocationService {
     let lon2 = longittude2;
     let lat1 = lattitude1;
     let lon1 = longittude1;
-    console.log(lat1, lon1 + '===' + lat2, lon2);
+    // console.log(lat1, lon1 + '===' + lat2, lon2);
     let R = 6371; // km
     let x1 = lat2 - lat1;
     let dLat = toRadian(x1);
@@ -163,7 +163,7 @@ class LocationService {
         Math.sin(dLon / 2);
     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     let d = R * c;
-    console.log('distance==?', d);
+    // console.log('distance==?', d);
     return d;
   }
 }

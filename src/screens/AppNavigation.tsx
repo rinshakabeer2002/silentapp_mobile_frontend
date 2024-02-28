@@ -8,8 +8,10 @@ import {NavigationContainer} from '@react-navigation/native';
 import {Locations} from './locations/Locations';
 import {AddLocation} from './add-location/AddLocation';
 import {EditLocation} from './edit-location/EditLocation';
+import {Title} from './title/Title';
 
 type AppNavigationParamsList = {
+  Title: undefined;
   Locations: undefined;
   AddLocation: undefined;
   EditLocation: {location: any; index: number};
@@ -17,6 +19,10 @@ type AppNavigationParamsList = {
 
 const StackNavigator = createNativeStackNavigator<AppNavigationParamsList>();
 
+export type TitleScreenNavigationProp = NativeStackScreenProps<
+  AppNavigationParamsList,
+  'Title'
+>;
 export type LocationsScreenNavigationProp = NativeStackScreenProps<
   AppNavigationParamsList,
   'Locations'
@@ -34,12 +40,17 @@ export const AppNavigation = () => {
   return (
     <NavigationContainer>
       <StackNavigator.Navigator
-        initialRouteName={'Locations'}
+        initialRouteName={'Title'}
         screenOptions={
           {
             //   headerShown: false,
           }
         }>
+        <StackNavigator.Screen
+          name={'Title'}
+          component={Title}
+          options={{headerShown: false}}
+        />
         <StackNavigator.Screen
           name={'Locations'}
           component={Locations}

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {
   StyleSheet,
   Text,
@@ -26,6 +26,7 @@ export const Locations: React.FC<LocationsScreenNavigationProp> = ({
   const [locations, setLocations] = useState<Array<any>>([]);
   const [currentLocation, setCurrentLocation] = useState<any>(null);
   const {mode, error, setMode} = useRingerMode();
+  const isLoading = useRef(true);
 
   const changeMode = async (newMode: RingerModeType) => {
     // From N onward, ringer mode adjustments that would toggle Do Not Disturb
@@ -48,6 +49,7 @@ export const Locations: React.FC<LocationsScreenNavigationProp> = ({
     const data = await LocalStore.getLocations();
     if (data && data.length) setLocations(data);
     else setLocations([]);
+    isLoading.current = false;
   };
 
   useEffect(() => {
@@ -98,13 +100,19 @@ export const Locations: React.FC<LocationsScreenNavigationProp> = ({
               : RINGER_MODE.vibrate,
           );
         }
-        console.log('distance ', distance);
       });
     }
   }, [currentLocation, locations]);
   const handleAdd = () => {
     navigation.push('AddLocation');
   };
+  if (isLoading.current) {
+    return (
+      <View style={styles.addContainer}>
+        <Text style={{textAlign: 'center'}}>Loading....</Text>
+      </View>
+    );
+  }
   if (!locations || !locations.length) {
     return (
       <View style={styles.addContainer}>
