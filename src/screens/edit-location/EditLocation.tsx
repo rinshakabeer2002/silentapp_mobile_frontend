@@ -201,12 +201,12 @@ export const EditLocation: React.FC<EditLocationScreenNavigationProp> = ({
           <View
             style={{
               marginTop: 30,
-              backgroundColor: 'cyan',
+              backgroundColor: '#1589FF',
               paddingLeft: 10,
               paddingRight: 10,
               paddingVertical: 5,
             }}>
-            <Text>Update</Text>
+            <Text style={{color: 'white'}}>Update</Text>
           </View>
         </Pressable>
       </View>

@@ -84,6 +84,7 @@ export const Locations: React.FC<LocationsScreenNavigationProp> = ({
     });
   }, [navigation]);
   React.useEffect(() => {
+    let didFoundLocation = false;
     if (currentLocation && locations.length) {
       locations.forEach(item => {
         // console.log('item ', item);
@@ -94,6 +95,7 @@ export const Locations: React.FC<LocationsScreenNavigationProp> = ({
           item.location.coordinates.lng,
         );
         if (distance < item.radius / 1000) {
+          didFoundLocation = true;
           changeMode(
             item.selectedPhoneMode === '1'
               ? RINGER_MODE.silent
@@ -101,6 +103,9 @@ export const Locations: React.FC<LocationsScreenNavigationProp> = ({
           );
         }
       });
+    }
+    if (!didFoundLocation) {
+      changeMode(RINGER_MODE.normal);
     }
   }, [currentLocation, locations]);
   const handleAdd = () => {
@@ -116,19 +121,19 @@ export const Locations: React.FC<LocationsScreenNavigationProp> = ({
   if (!locations || !locations.length) {
     return (
       <View style={styles.addContainer}>
-        <Text style={{textAlign: 'center'}}>
+        <Text style={{textAlign: 'center', fontWeight: 'bold'}}>
           Please add locations where you want phone to remain silent
         </Text>
         <Pressable onPress={handleAdd}>
           <View
             style={{
               marginTop: 30,
-              backgroundColor: 'cyan',
+              backgroundColor: '#1589FF',
               paddingLeft: 10,
               paddingRight: 10,
               paddingVertical: 5,
             }}>
-            <Text>Add</Text>
+            <Text style={{color: 'white'}}>Add</Text>
           </View>
         </Pressable>
       </View>

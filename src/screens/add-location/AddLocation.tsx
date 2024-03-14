@@ -232,12 +232,12 @@ export const AddLocation: React.FC<AddLocationScreenNavigationProp> = ({
           <Pressable onPress={handleSave}>
             <View
               style={{
-                backgroundColor: 'cyan',
+                backgroundColor: '#1589FF',
                 paddingLeft: 10,
                 paddingRight: 10,
                 paddingVertical: 5,
               }}>
-              <Text>Save</Text>
+              <Text style={{color: 'white'}}>Save</Text>
             </View>
           </Pressable>
         </View>
